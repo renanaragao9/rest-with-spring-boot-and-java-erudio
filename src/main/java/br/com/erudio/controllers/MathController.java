@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.erudio.exception.UnsupportedMathOperationException;
+
 @RestController
 @RequestMapping("/math")
 
@@ -12,10 +14,11 @@ public class MathController {
     public Double sum(
         @PathVariable("numberOne") String numberOne,
         @PathVariable("numberTwo") String numberTwo
-    ) throws Exception {
+    ) throws UnsupportedMathOperationException {
         if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-            throw new IllegalArgumentException();
+            throw new UnsupportedMathOperationException("Por favor, forneça um número válido!");
         }
+        
         return convertToDouble(numberOne) + convertToDouble(numberTwo);
     }
 
@@ -43,17 +46,17 @@ public class MathController {
         return numberOne / numberTwo;
     }
 
-    private Double convertToDouble(String strNumber) throws IllegalArgumentException {
+    private Double convertToDouble(String strNumber) throws UnsupportedMathOperationException {
         if (strNumber == null || strNumber.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new UnsupportedMathOperationException("Por favor, forneça um número válido!");
         }
 
         return Double.valueOf(strNumber.replaceAll(",", "."));
     }
 
-    private boolean isNumeric(String strNumber) throws IllegalArgumentException {
+    private boolean isNumeric(String strNumber) throws UnsupportedMathOperationException {
         if (strNumber == null || strNumber.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new UnsupportedMathOperationException("Por favor, forneça um número válido!");
         }
 
         String number = strNumber.replaceAll(",", ".");
