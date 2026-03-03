@@ -22,28 +22,52 @@ public class MathController {
         return convertToDouble(numberOne) + convertToDouble(numberTwo);
     }
 
-    @RequestMapping("/subtraction")
+    @RequestMapping("/subtraction/{numberOne}/{numberTwo}")
     public Double subtraction(
-        Double numberOne, 
-        Double numberTwo
-    ) {
-        return numberOne - numberTwo;
+       @PathVariable("numberOne") String numberOne,
+       @PathVariable("numberTwo") String numberTwo
+    ) throws UnsupportedMathOperationException {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Por favor, forneça um número válido!");
+        }
+
+        return convertToDouble(numberOne) - convertToDouble(numberTwo);
     }
 
-    @RequestMapping("/multiplication")
+    @RequestMapping("/multiplication/{numberOne}/{numberTwo}")
     public Double multiplication(
-        Double numberOne, 
-        Double numberTwo
-    ) {
-        return numberOne * numberTwo;
+       @PathVariable("numberOne") String numberOne,
+       @PathVariable("numberTwo") String numberTwo
+    ) throws UnsupportedMathOperationException {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Por favor, forneça um número válido!");
+        }
+
+        return convertToDouble(numberOne) * convertToDouble(numberTwo);
     }
 
-    @RequestMapping("/division")
+    @RequestMapping("/division/{numberOne}/{numberTwo}")
     public Double division(
-        Double numberOne, 
-        Double numberTwo
-    ) {
-        return numberOne / numberTwo;
+       @PathVariable("numberOne") String numberOne,
+       @PathVariable("numberTwo") String numberTwo
+    ) throws UnsupportedMathOperationException {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Por favor, forneça um número válido!");
+        }
+
+        return convertToDouble(numberOne) / convertToDouble(numberTwo);
+    }
+
+    @RequestMapping("/raiz/{numberOne}/{numberTwo}")
+    public Double raiz(
+       @PathVariable("numberOne") String numberOne,
+       @PathVariable("numberTwo") String numberTwo
+    ) throws UnsupportedMathOperationException {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+            throw new UnsupportedMathOperationException("Por favor, forneça um número válido!");
+        }
+
+        return Math.sqrt(convertToDouble(numberOne));
     }
 
     private Double convertToDouble(String strNumber) throws UnsupportedMathOperationException {
